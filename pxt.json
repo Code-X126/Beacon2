@@ -13,9 +13,6 @@
     "license": [
         "LICENSE"
     ],
-    "testFiles": [
-        "test.ts"
-    ],
     "public": true,
     "yotta": {
         "config": {
