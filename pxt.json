@@ -1,0 +1,31 @@
+{
+    "name": "ble-beacon",
+    "version": "0.0.1",
+    "description": "Continuous Low Energy BLE Beacon Extension for micro:bit",
+    "dependencies": {
+        "core": "*"
+    },
+    "files": [
+        "main.ts",
+        "beacon.cpp",
+        "README.md"
+    ],
+    "license": [
+        "LICENSE"
+    ],
+    "testFiles": [
+        "test.ts"
+    ],
+    "public": true,
+    "yotta": {
+        "config": {
+            "microbit-dal": {
+                "bluetooth": {
+                    "enabled": 1,
+                    "pairing_mode": 0,
+                    "open": 1
+                }
+            }
+        }
+    }
+}
