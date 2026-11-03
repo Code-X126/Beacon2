@@ -5,7 +5,7 @@
 namespace bleBeacon {
 
     export enum TxPowerLevel {
-        //% block="-20 dBm (Lowest Power)"
+        //% block="-20 dBm (Short Range / Low Power)"
         Lowest = -20,
         //% block="-12 dBm"
         Low = -12,
@@ -16,17 +16,16 @@ namespace bleBeacon {
     }
 
     /**
-     * Start broadcasting continuous BLE Beacon
-     * @param intervalMs Advertising interval in milliseconds (e.g. 1000ms), eg: 1000
+     * Start broadcasting continuous BLE Beacon for RSSI tracking
+     * @param intervalMs Advertising interval in milliseconds (e.g. 10ms for fast RSSI), eg: 10
      * @param power Transmit power level, eg: TxPowerLevel.Lowest
-     * @param name Device Broadcast Name, eg: "uBitBeacon"
+     * @param name Device Broadcast Name, eg: "RSSI-Node"
      */
-    //% block="start continuous beacon | name %name | interval (ms) %intervalMs | power %power"
-    //% intervalMs.defl=1000
+    //% block="start fast RSSI beacon | name %name | interval (ms) %intervalMs | power %power"
+    //% intervalMs.defl=10
     //% shim=bleBeacon::startContinuousBeacon
     export function startBeacon(name: string, intervalMs: number, power: TxPowerLevel): void {
-        // Fallback for simulator or native binding
-        console.log("BLE Beacon started: " + name);
+        console.log("Fast BLE Beacon started: " + name);
     }
 
     /**
