@@ -3,29 +3,28 @@
 
 namespace bleBeacon {
 
-    // Helper function to send custom BLE advertising payload
     // % shim=bleBeacon::startContinuousBeacon
     void startContinuousBeacon(int intervalMs, int txPower, StringData* payload) {
         #if MICROBIT_CODAL
-        // Initialize BLE stack if not already started
         uBit.bleManager.init();
-
-        // Set transmit power (-20dBm to +4dBm for ultra-low power)
         uBit.bleManager.setTransmitPower(txPower);
 
-        // Configure Advertising parameters
-        // Non-connectable, undirected advertising for low energy
         gap_adv_params_t adv_params;
         adv_params.type = GAP_ADV_TYPE_ADV_NONCONN_IND; 
-        adv_params.interval_min = (intervalMs * 8) / 5; // Configured in units of 0.625ms
-        adv_params.interval_max = adv_params.interval_min;
 
-        // Load custom payload data
+        // Convert milliseconds to Bluetooth advertising units (0.625ms per unit)
+        // Ensure interval doesn't drop below the BLE spec minimum of 20ms for some stacks, 
+        // though 10ms (value: 16) works on nRF52 under non-connectable undirected mode.
+        int adv_units = (intervalMs * 8) / 5;
+        if (adv_units < 16) adv_units = 16; // Minimum floor safeguard
+
+        adv_params.interval_min = adv_units;
+        adv_params.interval_max = adv_units;
+
         if (payload && payload->len > 0) {
             uBit.bleManager.setAdvertisingData((uint8_t*)payload->data, payload->len);
         }
 
-        // Start continuous broadcasting
         uBit.bleManager.startAdvertising();
         #endif
     }
